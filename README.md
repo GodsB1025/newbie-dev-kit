@@ -24,3 +24,7 @@ Git · Node.js · Python · VS Code · Docker 등 개발에 필요한 도구 묶
 > "`CLAUDE.md` 규칙을 참고해서 ○○ 패키지를 추가해줘"
 
 라고 말하면 알아서 `Setup-DevEnv.ps1`에 항목을 넣어줍니다. 직접 코드를 안 만져도 돼요.
+
+## 라이선스
+
+MIT

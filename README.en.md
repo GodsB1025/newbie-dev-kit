@@ -24,3 +24,7 @@ Open this repo with an AI coding tool like **Claude Code** or **Codex**, then ju
 > "Add the ○○ package, following the rules in `CLAUDE.md`."
 
 It will add the entry to `Setup-DevEnv.ps1` for you — no need to touch the code yourself.
+
+## License
+
+MIT
