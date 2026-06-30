@@ -5,6 +5,8 @@
 
 > 🌐 English: [README.md](README.md)
 
+![Newbie Dev Kit — 설치할 항목을 고르고 Install 클릭](docs/picker.png)
+
 ## 사용법
 
 1. 이 폴더를 새 PC에 **그대로 복사**합니다. (편집기로 다시 저장하면 인코딩이 깨집니다)

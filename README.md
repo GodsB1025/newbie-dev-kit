@@ -5,6 +5,8 @@ Pick the tools you want in a window and install them with a single click. (Windo
 
 > 🌐 한국어: [README.ko.md](README.ko.md)
 
+![Newbie Dev Kit — pick what to install, then click Install](docs/picker.png)
+
 ## How to use
 
 1. Copy this folder to the new PC **as-is** (re-saving in an editor can corrupt the encoding).
