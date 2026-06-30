@@ -1,30 +1,30 @@
 # Newbie Dev Kit — for Windows
 
-뉴비 개발자 · 회사 신입 · 새 데스크탑의 **개발 환경 세팅을 한 번에** 도와줍니다.
-설치할 도구를 창에서 골라 클릭 한 번으로 설치해요. (Windows 전용)
+Helps **newbie developers, new hires, and fresh desktops** set up a development environment in one go.
+Pick the tools you want in a window and install them with a single click. (Windows only)
 
-> 🌐 English: [README.en.md](README.en.md)
+> 🌐 한국어: [README.ko.md](README.ko.md)
 
-## 사용법
+## How to use
 
-1. 이 폴더를 새 PC에 **그대로 복사**합니다. (편집기로 다시 저장하면 인코딩이 깨집니다)
-2. **`Run-Setup.bat`** 더블클릭 → UAC 창에서 **[예]**.
-3. 뜨는 창에서 원하는 항목을 체크하고 **[설치 시작]**.
+1. Copy this folder to the new PC **as-is** (re-saving in an editor can corrupt the encoding).
+2. Double-click **`Run-Setup.bat`** → click **[Yes]** on the UAC prompt.
+3. Check the tools you want in the window, then start the install.
 
-끝입니다. 이미 깔린 건 알아서 건너뛰니 여러 번 돌려도 안전해요.
+That's it. Already-installed tools are skipped automatically, so it's safe to run multiple times.
 
-## 무엇이 깔리나요?
+## What gets installed?
 
-Git · Node.js · Python · VS Code · Docker 등 개발에 필요한 도구 묶음.
-대부분 **winget**으로 설치됩니다.
+A bundle of common dev tools — Git, Node.js, Python, VS Code, Docker, and more.
+Most are installed via **winget**.
 
-## 원하는 도구 추가하기
+## Adding your own tools
 
-이 저장소를 **Claude Code**나 **Codex** 같은 AI 코딩 도구로 연 뒤,
-> "`CLAUDE.md` 규칙을 참고해서 ○○ 패키지를 추가해줘"
+Open this repo with an AI coding tool like **Claude Code** or **Codex**, then just say:
+> "Add the ○○ package, following the rules in `CLAUDE.md`."
 
-라고 말하면 알아서 `Setup-DevEnv.ps1`에 항목을 넣어줍니다. 직접 코드를 안 만져도 돼요.
+It will add the entry to `Setup-DevEnv.ps1` for you — no need to touch the code yourself.
 
-## 라이선스
+## License
 
 MIT
