@@ -1168,7 +1168,9 @@ $Lineup = @(
     @{ Key='tabby';      Name='Tabby';                       Group='terminal';
        Installed={ Test-AnyInstalled -Command 'tabby' -Arp 'Tabby*' -Path "$env:LOCALAPPDATA\Programs\Tabby\Tabby.exe" };
        Action={ Install-WingetPackage -Id 'Eugeny.Tabby' -Name 'Tabby' } }
-    @{ Key='warp';       Name='Warp';                        Group='terminal';
+    @{ Key='warp';       Name='Warp';                        Group='terminal'; DefaultOff=$true;
+       # 기본 해제(opt-in): winget 패키지(Warp.Warp)의 app.warp.dev 다운로드가 막판(~115/125MB)에서
+       # 반복적으로 정체돼 설치가 자주 실패한다(2026-07 여러 환경에서 확인). CDN이 안정화되면 DefaultOff 를 지워 기본 체크로 되돌린다.
        # Cloudflare 'WARP' VPN(ARP 'Cloudflare WARP')과 다른 제품 — 'Warp*' 글롭은 그쪽을 안 잡는다
        Installed={ Test-AnyInstalled -Arp 'Warp*' -Path "$env:LOCALAPPDATA\Programs\Warp\warp.exe" };
        Action={ Install-WingetPackage -Id 'Warp.Warp' -Name 'Warp' } }
