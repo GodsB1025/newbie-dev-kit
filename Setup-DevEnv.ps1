@@ -589,6 +589,17 @@ function Test-AndroidSdkInstalled {
     return $false
 }
 
+# JDK(버전별) 설치 탐지 — 벤더(MS/Temurin/Oracle) 무관, ARP + 설치경로로 판정.
+#  Install-OpenJdk 의 멱등성 체크와 $Lineup 항목이 이 함수를 공유해 두 판정이 어긋나지 않게 한다.
+#  winget list --id 로는 판정하지 않는다: 낮은 버전(예: 17)이 깔린 상태에서 상위 버전 id(예: .21)를
+#  조회하면 winget 이 설치된 17을 21의 '업그레이드 대상'으로 오연결해(Version 17 / Available 21)
+#  오탐하기 때문 — 그러면 21이 SKIP 되어 영영 설치되지 않는다(CLAUDE.md 규칙 #3: winget list 단독 금지).
+function Test-JdkInstalled([ValidateSet('17','21','25')][string]$Version) {
+    Test-AnyInstalled `
+        -Arp "Microsoft Build of OpenJDK*$Version*","Eclipse Temurin*$Version*","Eclipse Adoptium*$Version*" `
+        -Path "C:\Program Files\Microsoft\jdk-$Version*","C:\Program Files\Eclipse Adoptium\jdk-$Version*","C:\Program Files\Java\jdk-$Version*"
+}
+
 # winget 패키지 설치 (멱등성 + 버전 핀, 핀 실패 시 최신으로 폴백)
 function Install-WingetPackage {
     param(
@@ -803,7 +814,7 @@ function Install-OpenJdk {
     $src  = $Config.JdkSources[$Version]
     $name = "OpenJDK $Version"
     Write-Step ((L 'stepJdk') -f $Version, $src.Id)
-    if (Test-WingetInstalled $src.Id) {
+    if (Test-JdkInstalled $Version) {
         Write-Skip ((L 'skipAlready') -f $name); Add-Result $name 'SKIP' (L 'detailAlready')
     } elseif ($script:DryRun) {
         Write-Host ("    [DRY]  " + (L 'dryJdkMsi')) -ForegroundColor Magenta
@@ -1094,18 +1105,15 @@ $Lineup = @(
                     -InstalledCheck { Test-Path "$env:USERPROFILE\.pyenv\pyenv-win\bin\pyenv.bat" } };
        Requires=@('choco') }
     @{ Key='jdk17';      Name='OpenJDK 17';                  Group='lang';
-       # JDK 는 벤더 무관·버전별로 감지 (Android 가 선행 요구하는 호환 기준선)
-       Installed={ Test-AnyInstalled -Arp 'Microsoft Build of OpenJDK*17*','Eclipse Temurin*17*' `
-                       -Path 'C:\Program Files\Microsoft\jdk-17*','C:\Program Files\Eclipse Adoptium\jdk-17*','C:\Program Files\Java\jdk-17*' };
+       # JDK 는 벤더 무관·버전별로 감지 (Android 가 선행 요구하는 호환 기준선). Install-OpenJdk 와 동일 판정 공유.
+       Installed={ Test-JdkInstalled '17' };
        Action={ Install-OpenJdk -Version '17' } }
     @{ Key='jdk21';      Name='OpenJDK 21';                  Group='lang'; DefaultOff=$true;
        # 17 이 Android 호환 기준선이라 기본 체크. 21/25 는 필요한 사람만 직접 체크(opt-in)
-       Installed={ Test-AnyInstalled -Arp 'Microsoft Build of OpenJDK*21*','Eclipse Temurin*21*' `
-                       -Path 'C:\Program Files\Microsoft\jdk-21*','C:\Program Files\Eclipse Adoptium\jdk-21*','C:\Program Files\Java\jdk-21*' };
+       Installed={ Test-JdkInstalled '21' };
        Action={ Install-OpenJdk -Version '21' } }
     @{ Key='jdk25';      Name='OpenJDK 25';                  Group='lang'; DefaultOff=$true;
-       Installed={ Test-AnyInstalled -Arp 'Eclipse Temurin*25*','Microsoft Build of OpenJDK*25*' `
-                       -Path 'C:\Program Files\Eclipse Adoptium\jdk-25*','C:\Program Files\Microsoft\jdk-25*','C:\Program Files\Java\jdk-25*' };
+       Installed={ Test-JdkInstalled '25' };
        Action={ Install-OpenJdk -Version '25' } }
 
     @{ Key='vscode';     Name='VS Code';                     Group='editor';
